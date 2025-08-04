@@ -1,0 +1,12 @@
+[
+    { "id": 1, "name": "Alice", "age": 25, "gender": "Female", "email": "alice@example.com" },
+    { "id": 2, "name": "Bob", "age": 30, "gender": "Male", "email": "bob@example.com" },
+    { "id": 3, "name": "Charlie", "age": 28, "gender": "Male", "email": "charlie@example.com" },
+    { "id": 4, "name": "Diana", "age": 26, "gender": "Female", "email": "diana@example.com" },
+    { "id": 5, "name": "Ethan", "age": 32, "gender": "Male", "email": "ethan@example.com" },
+    { "id": 6, "name": "Fiona", "age": 27, "gender": "Female", "email": "fiona@example.com" },
+    { "id": 7, "name": "George", "age": 35, "gender": "Male", "email": "george@example.com" },
+    { "id": 8, "name": "Hannah", "age": 24, "gender": "Female", "email": "hannah@example.com" },
+    { "id": 9, "name": "Ian", "age": 29, "gender": "Male", "email": "ian@iexample.com" },
+    { "id": 10, "name": "Jasmine", "age": 31, "gender": "Female", "email": "jasmine@example.com" }
+]
