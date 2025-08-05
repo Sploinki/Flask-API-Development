@@ -16,5 +16,23 @@
         "age": 40,
         "gender": "Male",
         "email": "jamey@example.com"
+    },
+    "8440071a-3312-458c-9281-15968f67aa34": {
+        "name": "Dole",
+        "age": 60,
+        "gender": "Male",
+        "email": "dole@example.com"
+    },
+    "d184495c-bbe5-4b61-94b3-8dc245d2024a": {
+        "name": "Bayle",
+        "age": 60,
+        "gender": "Male",
+        "email": "bayle@example.com"
+    },
+    "5d776baf-facd-4a74-87ff-fa10c4cc88ff": {
+        "age": 25,
+        "email": "slime@example.com",
+        "gender": "Female",
+        "name": "Slime"
     }
 }

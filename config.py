@@ -15,3 +15,6 @@ API_KEY = os.getenv("API_KEY")
 
 # Path to the session data JSON file
 SESSION_FILE = "root/database/session/session.json"
+
+# Required for Flask's session
+SECRET_KEY = os.getenv("SECRET_SESSION_KEY")
