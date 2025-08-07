@@ -7,9 +7,18 @@ Utility functions for managing user sessions using a JSON file.
 import json
 import uuid
 import os
-from config import SESSION_FILE
+from config import SESSION_FILE, API_KEY
 from typing import Dict, List
-from flask import current_app
+from flask import current_app, request, jsonify
+
+
+def validate_api_key():
+    api_key = request.headers.get("x-api-key")
+    if not api_key:
+        return jsonify({"error": "API key required"}), 401
+    if api_key != API_KEY:
+        return jsonify({"error": "Unauthorized access"}), 403
+    return None  # Means valid
 
 
 # Load sessions from JSON

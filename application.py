@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request, session
 import uuid
 from flask_cors import CORS
 from config import API_KEY, SECRET_KEY  # RSA_PASSPHRASE
+from helpers import validate_api_key
 from helpers import add_user_to_session, load_sessions
 from helpers import load_subjects, is_duplicate_subject, save_subjects_atomic
 from helpers import load_students, is_duplicate_student, save_students_atomic
@@ -182,12 +183,10 @@ def add_subject() -> tuple[Dict[str, Union[str, bool]], int]:
                 "error": "<error message>"
             }
     """
-    # Add this to the top of add_subject()
-    api_key = request.headers.get("x-api-key")
-    if not api_key:
-        return jsonify({"error": "API key required"}), 401
-    if api_key != API_KEY:
-        return jsonify({"error": "Unauthorized access"}), 403
+    # Validate API key
+    validation_response = validate_api_key()
+    if validation_response:
+        return validation_response
 
     subjects_path = "data/subjects.json"
     lock_path = f"{subjects_path}.lock"
@@ -269,11 +268,9 @@ def add_student() -> tuple[Dict[str, Union[str, bool]], int]:
 
     try:
         # --- 1. API Key Validation ---
-        api_key = request.headers.get("x-api-key")
-        if not api_key:
-            return jsonify({"error": "API key required"}), 401
-        if api_key != API_KEY:
-            return jsonify({"error": "Unauthorized access"}), 403
+        validation_response = validate_api_key()
+        if validation_response:
+            return validation_response
 
         # --- 2. Input Validation ---
         data = request.get_json()
@@ -390,11 +387,9 @@ def get_students_by_subject() -> tuple[Dict[str, Union[str, list]], int]:
 
     try:
         # --- 1. API Key Validation ---
-        api_key = request.headers.get("x-api-key")
-        if not api_key:
-            return jsonify({"error": "API key required"}), 401
-        if api_key != API_KEY:
-            return jsonify({"error": "Unauthorized access"}), 403
+        validation_response = validate_api_key()
+        if validation_response:
+            return validation_response
 
         # --- 2. Validate Input ---
         data = request.get_json()
@@ -477,11 +472,9 @@ def update_student() -> tuple[Dict[str, Union[str, bool]], int]:
 
     try:
         # --- 1. API Key Validation ---
-        api_key = request.headers.get("x-api-key")
-        if not api_key:
-            return jsonify({"error": "API key required"}), 401
-        if api_key != API_KEY:
-            return jsonify({"error": "Unauthorized access"}), 403
+        validation_response = validate_api_key()
+        if validation_response:
+            return validation_response
 
         # --- 2. Parse and validate input ---
         data = request.get_json()
@@ -607,11 +600,9 @@ def get_student(student_id: str) -> tuple[Dict[str, Union[str, bool]], int]:
 
     try:
         # --- 1. API Key Validation ---
-        api_key = request.headers.get("x-api-key")
-        if not api_key:
-            return jsonify({"error": "API key required"}), 401
-        if api_key != API_KEY:
-            return jsonify({"error": "Unauthorized access"}), 403
+        validation_response = validate_api_key()
+        if validation_response:
+            return validation_response
 
         # --- 2. Load Students File ---
         students = load_students(students_path)
