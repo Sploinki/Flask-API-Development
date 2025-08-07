@@ -8,6 +8,8 @@ import json
 import uuid
 import os
 from config import SESSION_FILE
+from typing import Dict, List
+from flask import current_app
 
 
 # Load sessions from JSON
@@ -44,3 +46,73 @@ def add_user_to_session(user_data):
     sessions[session_id] = user_data
     save_sessions(sessions)
     return session_id
+
+
+def load_subjects(file_path: str) -> List[Dict]:
+    """Load subjects from JSON file or return empty list."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError as e:
+        current_app.logger.error(f"Corrupted subjects file: {str(e)}")
+        raise
+
+
+def is_duplicate_subject(subjects: List[Dict], name: str) -> bool:
+    """Check if subject name already exists (case insensitive)."""
+    return any(
+        subject.get("subject_name", "").lower() == name.lower()
+        for subject in subjects
+    )
+
+
+def save_subjects_atomic(subjects: List[Dict], file_path: str) -> bool:
+    """Save subjects to file atomically using a temporary file."""
+    temp_path = f"{file_path}.tmp"
+    try:
+        with open(temp_path, "w", encoding="utf-8") as f:
+            json.dump(subjects, f, indent=4)
+        os.replace(temp_path, file_path)
+        return True
+    except Exception as e:
+        current_app.logger.error(f"Failed to save subjects: {str(e)}")
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        return False
+
+
+def load_students(file_path: str) -> List[Dict]:
+    """Load students from JSON file or return empty list."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError as e:
+        current_app.logger.error(f"Corrupted students file: {str(e)}")
+        raise
+
+
+def is_duplicate_student(students: List[Dict], email: str) -> bool:
+    """Check if student email already exists (case insensitive)."""
+    return any(
+        student.get("email", "").lower() == email.lower()
+        for student in students
+    )
+
+
+def save_students_atomic(students: List[Dict], file_path: str) -> bool:
+    """Save students to file atomically using a temporary file."""
+    temp_path = f"{file_path}.tmp"
+    try:
+        with open(temp_path, "w", encoding="utf-8") as f:
+            json.dump(students, f, indent=4)
+        os.replace(temp_path, file_path)
+        return True
+    except Exception as e:
+        current_app.logger.error(f"Failed to save students: {str(e)}")
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        return False

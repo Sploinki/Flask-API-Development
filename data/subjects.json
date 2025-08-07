@@ -1,0 +1,17 @@
+[
+    {
+        "subject_id": "d509aee7-ed3b-4954-bb24-52b5ebf646df",
+        "subject_name": "Chemistry",
+        "created_at": "2025-08-07T07:37:57.232764"
+    },
+    {
+        "subject_id": "d1bb64f8-20ed-4101-9008-9002d335e30e",
+        "subject_name": "Physics",
+        "created_at": "2025-08-07T07:38:04.665790"
+    },
+    {
+        "subject_id": "e0e49ea8-bc90-4fcd-9ffa-3532255ab3cf",
+        "subject_name": "Mathematics",
+        "created_at": "2025-08-07T07:38:12.962895"
+    }
+]
